@@ -1,3 +1,8 @@
+"use client";
+
+import { Carousel, Slider, SliderContainer } from "@/components/ui/carousel";
+import AutoScroll from "embla-carousel-auto-scroll";
+
 const pains = [
   {
     title: "Dados espalhados",
@@ -33,19 +38,33 @@ export default function PainPoints() {
           sistema especializado.
         </p>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2">
-          {pains.map((pain) => (
-            <div
-              key={pain.title}
-              className="rounded-xl border border-white/10 bg-black/30 p-6"
-            >
-              <h3 className="font-mono text-lg font-semibold text-lime">
-                {pain.title}
-              </h3>
-              <p className="mt-2 text-sm text-white/70">{pain.description}</p>
-            </div>
-          ))}
-        </div>
+        <Carousel
+          options={{ loop: true, dragFree: true }}
+          plugins={[
+            AutoScroll({
+              speed: 1,
+              stopOnInteraction: false,
+              stopOnMouseEnter: true,
+              startDelay: 100,
+            }),
+          ]}
+          className="mt-10"
+        >
+          <SliderContainer className="gap-6">
+            {pains.map((pain) => (
+              <Slider key={pain.title} className="w-[280px] sm:w-[340px]">
+                <div className="h-full rounded-xl border border-white/10 bg-black/30 p-6">
+                  <h3 className="font-mono text-lg font-semibold text-lime">
+                    {pain.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-white/70">
+                    {pain.description}
+                  </p>
+                </div>
+              </Slider>
+            ))}
+          </SliderContainer>
+        </Carousel>
       </div>
     </section>
   );
