@@ -3,6 +3,7 @@ export type Testimonial = {
   name: string;
   role: string;
   company: string;
+  photo: string;
 };
 
 export const testimonials: Testimonial[] = [
@@ -12,6 +13,7 @@ export const testimonials: Testimonial[] = [
     name: "Douglas Gimenez",
     role: "Sócio-Administrador",
     company: "Cangas II",
+    photo: "/testimonials/douglas-gimenez.png",
   },
   {
     quote:
@@ -19,6 +21,7 @@ export const testimonials: Testimonial[] = [
     name: "Sandra Reis",
     role: "Coordenadora",
     company: "Calbrax",
+    photo: "/testimonials/sandra-reis.png",
   },
   {
     quote:
@@ -26,6 +29,7 @@ export const testimonials: Testimonial[] = [
     name: "Gabriel Amorim",
     role: "Analista de T.I",
     company: "MIBASA",
+    photo: "/testimonials/gabriel-amorim.png",
   },
   {
     quote:
@@ -33,6 +37,7 @@ export const testimonials: Testimonial[] = [
     name: "Ernani Junior",
     role: "Consultor de TI",
     company: "EAJ Tecnologia",
+    photo: "/testimonials/ernani-junior.png",
   },
   {
     quote:
@@ -40,6 +45,7 @@ export const testimonials: Testimonial[] = [
     name: "Cleyton Borges",
     role: "Supervisor de Vendas",
     company: "Calcário Terra Branca",
+    photo: "/testimonials/cleyton-borges.png",
   },
   {
     quote:
@@ -47,6 +53,7 @@ export const testimonials: Testimonial[] = [
     name: "Márcio Azevedo",
     role: "Gerente de TI",
     company: "Pedreira Um",
+    photo: "/testimonials/marcio-azevedo.png",
   },
   {
     quote:
@@ -54,6 +61,7 @@ export const testimonials: Testimonial[] = [
     name: "João Carlos",
     role: "Gerente",
     company: "Convém Mineração",
+    photo: "/testimonials/joao-carlos.png",
   },
   {
     quote:
@@ -61,5 +69,6 @@ export const testimonials: Testimonial[] = [
     name: "Gabriel Quintana",
     role: "Gerente de TI",
     company: "Calcário Bela Vista",
+    photo: "/testimonials/gabriel-quintana.png",
   },
 ];

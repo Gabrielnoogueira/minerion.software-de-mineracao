@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { testimonials } from "@/data/testimonials";
 
 export default function Testimonials() {
@@ -54,13 +55,22 @@ export default function Testimonials() {
               <p className="text-sm leading-relaxed text-white/80">
                 &ldquo;{testimonial.quote}&rdquo;
               </p>
-              <div className="mt-6">
-                <p className="font-mono text-sm font-semibold text-lime">
-                  {testimonial.name}
-                </p>
-                <p className="text-xs text-white/60">
-                  {testimonial.role} — {testimonial.company}
-                </p>
+              <div className="mt-6 flex items-center gap-3">
+                <Image
+                  src={testimonial.photo}
+                  alt={testimonial.name}
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 rounded-full border border-lime/40 object-cover"
+                />
+                <div>
+                  <p className="font-mono text-sm font-semibold text-lime">
+                    {testimonial.name}
+                  </p>
+                  <p className="text-xs text-white/60">
+                    {testimonial.role} — {testimonial.company}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
