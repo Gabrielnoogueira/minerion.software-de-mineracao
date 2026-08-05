@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import BigNumbers from "@/components/BigNumbers";
 import PainPoints from "@/components/PainPoints";
 import Testimonials from "@/components/Testimonials";
+import ClientsMap from "@/components/ClientsMap";
 import Modules from "@/components/Modules";
 import Differentials from "@/components/Differentials";
 import WhyChoose from "@/components/WhyChoose";
@@ -17,6 +18,7 @@ export default function Home() {
         <BigNumbers />
         <PainPoints />
         <Testimonials />
+        <ClientsMap />
         <Modules />
         <Differentials />
         <WhyChoose />
