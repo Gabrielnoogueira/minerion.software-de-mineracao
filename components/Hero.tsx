@@ -1,17 +1,26 @@
+import Image from "next/image";
 import DemoForm from "./DemoForm";
 
 export default function Hero() {
   return (
-    <section
-      id="agendar-demonstracao"
-      className="relative overflow-hidden bg-grey"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 15% 20%, rgba(220,255,10,0.12), transparent 45%), radial-gradient(circle at 85% 0%, rgba(28,111,101,0.25), transparent 40%), linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-        backgroundSize: "auto, auto, 48px 48px, 48px 48px",
-      }}
-    >
-      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 sm:py-24 lg:grid-cols-2 lg:items-center">
+    <section id="agendar-demonstracao" className="relative overflow-hidden bg-grey">
+      <Image
+        src="/hero-bg.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(115deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.75) 35%, rgba(20,20,20,0.55) 65%, rgba(20,20,20,0.75) 100%), radial-gradient(circle at 85% 0%, rgba(28,111,101,0.35), transparent 45%)",
+        }}
+      />
+
+      <div className="relative mx-auto grid max-w-6xl gap-12 px-6 py-16 sm:py-24 lg:grid-cols-2 lg:items-center">
         <div>
           <p className="font-mono text-sm font-semibold tracking-widest text-lime">
             MINERION ERP
