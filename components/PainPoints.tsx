@@ -51,18 +51,25 @@ export default function PainPoints() {
           className="mt-10"
         >
           <SliderContainer className="gap-6">
-            {pains.map((pain) => (
-              <Slider key={pain.title} className="w-[280px] sm:w-[340px]">
-                <div className="h-full rounded-xl border border-white/10 bg-black/30 p-6">
-                  <h3 className="font-mono text-lg font-semibold text-lime">
-                    {pain.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-white/70">
-                    {pain.description}
-                  </p>
-                </div>
-              </Slider>
-            ))}
+            {/* Conteúdo repetido: o motor de loop do embla precisa de trilha
+                bem mais larga que a viewport para girar sem travar. */}
+            {Array.from({ length: 4 }).flatMap((_, repeat) =>
+              pains.map((pain) => (
+                <Slider
+                  key={`${pain.title}-${repeat}`}
+                  className="w-[280px] sm:w-[340px]"
+                >
+                  <div className="h-full rounded-xl border border-white/10 bg-black/30 p-6">
+                    <h3 className="font-mono text-lg font-semibold text-lime">
+                      {pain.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-white/70">
+                      {pain.description}
+                    </p>
+                  </div>
+                </Slider>
+              ))
+            )}
           </SliderContainer>
         </Carousel>
       </div>
