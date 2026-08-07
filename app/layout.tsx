@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -28,6 +29,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-grey text-white font-sans">
+        <Script
+          src="https://tracking.minerion.com.br/api/tracker"
+          strategy="beforeInteractive"
+        />
         {children}
       </body>
     </html>
