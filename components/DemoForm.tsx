@@ -1,7 +1,14 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { submitLead, type SubmitLeadState } from "@/app/actions/submitLead";
+
+declare global {
+  interface Window {
+    minerionTrack?: (eventName: string, toMeta?: boolean) => void;
+    minerionTrackLead?: (data: { name?: string; email?: string; phone?: string }) => void;
+  }
+}
 
 function randomDigit() {
   return Math.floor(Math.random() * 9) + 1;
@@ -17,17 +24,31 @@ export default function DemoForm() {
     submitLead,
     initialState
   );
-  // Gerado só no cliente: Math.random() no SSR causaria hydration mismatch.
   const [captcha, setCaptcha] = useState<{ a: number; b: number } | null>(
     null
   );
+  const formStartFired = useRef(false);
+
   useEffect(() => {
-    // Intencional: só existe cliente para gerar valor aleatório sem
-    // divergir do HTML enviado pelo servidor (padrão recomendado pelo
-    // próprio React para conteúdo client-only).
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setCaptcha({ a: randomDigit(), b: randomDigit() });
   }, []);
+
+  useEffect(() => {
+    if (state.success) {
+      window.minerionTrackLead?.({
+        name: state.name,
+        email: state.email,
+        phone: state.phone,
+      });
+    }
+  }, [state.success, state.name, state.email, state.phone]);
+
+  function handleFormFocus() {
+    if (formStartFired.current) return;
+    formStartFired.current = true;
+    window.minerionTrack?.("FormStart", true);
+  }
 
   if (state.success) {
     return (
@@ -45,6 +66,7 @@ export default function DemoForm() {
   return (
     <form
       action={formAction}
+      onFocus={handleFormFocus}
       className="space-y-4 rounded-2xl border border-lime/40 bg-grey/80 p-6 sm:p-8"
     >
       <div className="grid gap-4 sm:grid-cols-2">
