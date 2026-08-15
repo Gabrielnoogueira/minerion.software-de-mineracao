@@ -6,7 +6,13 @@ import { submitLead, type SubmitLeadState } from "@/app/actions/submitLead";
 declare global {
   interface Window {
     minerionTrack?: (eventName: string, toMeta?: boolean) => void;
-    minerionTrackLead?: (data: { name?: string; email?: string; phone?: string }) => void;
+    minerionTrackLead?: (data: {
+      name?: string;
+      email?: string;
+      phone?: string;
+      company?: string;
+      job_title?: string;
+    }) => void;
   }
 }
 
@@ -40,9 +46,11 @@ export default function DemoForm() {
         name: state.name,
         email: state.email,
         phone: state.phone,
+        company: state.company,
+        job_title: state.jobTitle,
       });
     }
-  }, [state.success, state.name, state.email, state.phone]);
+  }, [state.success, state.name, state.email, state.phone, state.company, state.jobTitle]);
 
   function handleFormFocus() {
     if (formStartFired.current) return;

@@ -6,6 +6,8 @@ export type SubmitLeadState = {
   name?: string;
   email?: string;
   phone?: string;
+  company?: string;
+  jobTitle?: string;
 };
 
 export async function submitLead(
@@ -35,5 +37,5 @@ export async function submitLead(
 
   // Integração com a tabela `leads` no Supabase entra aqui quando o projeto Supabase for criado.
 
-  return { success: true, name: nome, email, phone: celular };
+  return { success: true, name: nome, email, phone: celular, company: empresa, jobTitle: cargo };
 }
