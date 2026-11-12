@@ -1,6 +1,6 @@
 const stats = [
   { value: "+400", label: "operações atendidas" },
-  { value: "29 anos", label: "de atuação no setor mineral" },
+  { value: "30 anos", label: "de atuação no setor mineral" },
   { value: "65%", label: "da produção nacional de calcário agrícola gerenciada pelo Minerion" },
 ];
 
