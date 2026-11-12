@@ -89,67 +89,67 @@ export default function DemoForm() {
       onFocus={handleFormFocus}
       className="relative space-y-5 rounded-2xl border border-lime/40 bg-grey/80 p-6 sm:p-8"
     >
-      <fieldset>
-        <legend className="text-sm font-medium text-white">
-          Qual o principal objetivo da sua conversa com a gente?
-        </legend>
-        <div className="mt-3 grid gap-2.5">
-          {OBJECTIVES.map((option) => (
-            <label
-              key={option.value}
-              className="group flex cursor-pointer items-center gap-3 rounded-lg border border-white/15 bg-black/40 px-4 py-3 text-sm text-white/80 transition hover:border-white/30 has-checked:border-lime has-checked:bg-lime/10 has-checked:text-white"
-            >
-              <input
-                type="radio"
-                name="objetivo"
-                value={option.value}
-                required
-                checked={objective === option.value}
-                onChange={() => setObjective(option.value)}
-                className="peer sr-only"
-              />
-              <span
-                aria-hidden="true"
-                className="grid h-5 w-5 shrink-0 place-items-center rounded-md border border-white/30 transition peer-checked:border-lime peer-checked:bg-lime peer-focus-visible:ring-2 peer-focus-visible:ring-lime"
-              >
-                <svg
-                  viewBox="0 0 16 16"
-                  className="h-3.5 w-3.5 text-black opacity-0 transition group-has-checked:opacity-100"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3.5 8.5l3 3 6-7" />
-                </svg>
-              </span>
-              {option.label}
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      {/* em "Outro assunto" os campos deixam de ser obrigatórios (não há envio de lead) */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <input name="nome" type="text" placeholder="Nome" required={!isOther} className={inputClasses} />
+        <input name="email" type="email" placeholder="Email" required={!isOther} className={inputClasses} />
+        <input name="empresa" type="text" placeholder="Empresa" required={!isOther} className={inputClasses} />
+        <input name="cargo" type="text" placeholder="Cargo" required={!isOther} className={inputClasses} />
+        <input
+          name="celular"
+          type="tel"
+          placeholder="Celular"
+          required={!isOther}
+          className={inputClasses + " sm:col-span-2"}
+        />
+      </div>
 
-      {isOther ? (
-        <p className="text-sm text-white/70">
-          Para carreira, parcerias e fornecedores, nosso site institucional tem
-          o canal certo para você.
-        </p>
-      ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
-          <input name="nome" type="text" placeholder="Nome" required className={inputClasses} />
-          <input name="email" type="email" placeholder="Email" required className={inputClasses} />
-          <input name="empresa" type="text" placeholder="Empresa" required className={inputClasses} />
-          <input name="cargo" type="text" placeholder="Cargo" required className={inputClasses} />
-          <input
-            name="celular"
-            type="tel"
-            placeholder="Celular"
+      <div>
+        <label htmlFor="objetivo" className="text-sm font-medium text-white">
+          Qual o principal objetivo da sua conversa com a gente?
+        </label>
+        <div className="relative mt-2">
+          <select
+            id="objetivo"
+            name="objetivo"
             required
-            className={inputClasses + " sm:col-span-2"}
-          />
+            value={objective ?? ""}
+            onChange={(e) => setObjective(e.target.value as Objective)}
+            className={
+              inputClasses +
+              " cursor-pointer appearance-none pr-11 " +
+              (objective ? "text-white" : "text-white/40")
+            }
+          >
+            <option value="" disabled className="bg-surface text-white/60">
+              Selecione uma opção
+            </option>
+            {OBJECTIVES.map((option) => (
+              <option key={option.value} value={option.value} className="bg-surface text-white">
+                {option.label}
+              </option>
+            ))}
+          </select>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 20 20"
+            className="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-lime"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 7.5l5 5 5-5" />
+          </svg>
         </div>
-      )}
+        {isOther && (
+          <p className="mt-2 text-sm text-white/70">
+            Para carreira, parcerias e fornecedores, nosso site institucional
+            tem o canal certo para você.
+          </p>
+        )}
+      </div>
 
       {/* honeypot anti-robô: invisível para pessoas */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
