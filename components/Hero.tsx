@@ -4,7 +4,7 @@ import PlantScene from "./ui/PlantScene";
 // pontos de prova reaproveitados do hero e do BigNumbers
 const DEMO_POINTS = [
   "Lavra, produção, suprimentos, manutenção e administrativo num único sistema",
-  "+400 operações atendidas em 29 anos de setor mineral",
+  "+400 operações atendidas em 30 anos de setor mineral",
   "Construído para quem entende de mineração",
 ];
 
