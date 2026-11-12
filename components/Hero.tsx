@@ -1,6 +1,13 @@
 import DemoForm from "./DemoForm";
 import PlantScene from "./ui/PlantScene";
 
+// pontos de prova reaproveitados do hero e do BigNumbers
+const DEMO_POINTS = [
+  "Lavra, produção, suprimentos, manutenção e administrativo num único sistema",
+  "+400 operações atendidas em 29 anos de setor mineral",
+  "Construído para quem entende de mineração",
+];
+
 export default function Hero() {
   return (
     <section className="relative isolate overflow-hidden bg-black">
@@ -80,21 +87,40 @@ export default function Hero() {
       </div>
       </div>
 
-      {/* formulário */}
-      <div id="agendar-demonstracao" className="mx-auto max-w-2xl scroll-mt-24 px-6 pt-6 pb-20 sm:pb-28">
-        <div className="text-center">
+      {/* copy em destaque (esquerda) + formulário (direita) */}
+      <div
+        id="agendar-demonstracao"
+        className="mx-auto grid max-w-6xl scroll-mt-24 gap-12 px-6 pt-6 pb-20 sm:pb-28 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-16"
+      >
+        <div>
           <span className="section-label">Demonstração</span>
-          <h2 className="mt-3 font-mono text-2xl font-bold tracking-[-0.01em] text-white sm:text-3xl">
-            Agende uma demonstração do Minerion.
+          <h2 className="mt-4 font-mono text-3xl leading-[1.1] font-bold tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl">
+            Agende uma{" "}
+            <span className="bg-linear-to-b from-lime from-20% to-[#7c9a00] bg-clip-text text-transparent">
+              demonstração
+            </span>{" "}
+            do Minerion.
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-muted">
+          <p className="mt-5 max-w-md text-lg text-muted">
             Preencha seus dados e nossa equipe entra em contato para marcar o
             melhor horário.
           </p>
+
+          <ul className="mt-8 space-y-4">
+            {DEMO_POINTS.map((point) => (
+              <li key={point} className="flex items-start gap-3 text-white/90">
+                <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-lime/15 text-lime">
+                  <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M3.5 8.5l3 3 6-7" />
+                  </svg>
+                </span>
+                {point}
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="mt-8">
-          <DemoForm />
-        </div>
+
+        <DemoForm />
       </div>
     </section>
   );
