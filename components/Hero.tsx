@@ -35,7 +35,7 @@ export default function Hero() {
       <div aria-hidden="true" className="aurora-blob -z-10 -top-40 -left-20 h-[500px] w-[500px] animate-aurora bg-lime/15" />
 
       {/* título */}
-      <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-16 text-center sm:pt-24">
+      <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-24 text-center sm:pt-20">
         <span className="glass-panel inline-flex items-center gap-2 rounded-full px-4 py-2">
           <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-lime shadow-[0_0_10px_#dcff0a]" />
           <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-200">
@@ -43,7 +43,7 @@ export default function Hero() {
           </span>
         </span>
 
-        <h1 className="mt-8 font-mono font-bold leading-[0.95] tracking-[-0.045em] text-balance text-[clamp(2.5rem,8vw,6.5rem)]">
+        <h1 className="mt-6 font-mono font-bold leading-[0.95] tracking-[-0.045em] text-balance text-[clamp(2.5rem,8vw,6.5rem)]">
           <span className="block bg-linear-to-b from-white from-20% to-[#8c9086] bg-clip-text text-transparent">
             Software completo
           </span>
@@ -52,14 +52,14 @@ export default function Hero() {
           </span>
         </h1>
 
-        <p className="mt-7 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+        <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
           A operação cresce, mas o controle de gestão nem sempre acompanha o
           mesmo ritmo. O Minerion integra lavra, produção, suprimentos,
           manutenção e administrativo num único sistema — construído para quem
           entende de mineração.
         </p>
 
-        <div className="mt-9">
+        <div className="mt-7">
           <a href="#agendar-demonstracao" className="btn btn-primary">
             Agendar demonstração <span aria-hidden="true">→</span>
           </a>
