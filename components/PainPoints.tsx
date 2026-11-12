@@ -28,8 +28,8 @@ const pains = [
 
 export default function PainPoints() {
   return (
-    <section className="bg-grey">
-      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+    <section className="bg-grey py-16 sm:py-20">
+      <div className="mx-auto max-w-6xl px-6">
         <h2 className="font-mono text-2xl font-bold text-white sm:text-3xl">
           Dores que resolvemos
         </h2>
@@ -37,7 +37,10 @@ export default function PainPoints() {
           Problemas comuns em mineradoras que ainda gerem a operação sem um
           sistema especializado.
         </p>
+      </div>
 
+      {/* carrossel ocupa a largura toda da tela, com esmaecimento nas bordas */}
+      <div className="[mask-image:linear-gradient(to_right,transparent,#000_6%,#000_94%,transparent)]">
         <Carousel
           options={{ loop: true, dragFree: true }}
           plugins={[
