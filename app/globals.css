@@ -330,6 +330,7 @@ html {
   font-weight: 700;
   fill: #fff;
 }
+.plant .mtag .lead,
 .plant .tag .lead {
   fill: none;
   stroke: var(--color-lime);
@@ -337,6 +338,7 @@ html {
   stroke-width: 1.5;
   stroke-dasharray: 3 5;
 }
+.plant .mtag .nd,
 .plant .tag .nd,
 .plant .tag .live {
   fill: var(--color-lime);
@@ -345,6 +347,7 @@ html {
 .plant .tag .live {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+.plant .mtag .np,
 .plant .tag .np {
   fill: none;
   stroke: var(--color-lime);
@@ -357,6 +360,11 @@ html {
   .plant .tag {
     display: none;
   }
+}
+/* guias do celular: mais grossas porque a cena é bem reduzida */
+.plant .mtag .lead {
+  stroke-width: 4;
+  stroke-dasharray: 8 12;
 }
 
 @keyframes plant-flow {

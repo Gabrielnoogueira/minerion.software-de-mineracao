@@ -281,11 +281,28 @@ function DesktopScene() {
  * Composição para celular: o mesmo fluxo, com os equipamentos aproximados.
  * A torre é deslocada 220 unidades para a esquerda e sai uma das linhas de pilha.
  */
+/* enquadramento da cena mobile (usado também para posicionar as etiquetas HTML) */
+const M_VB = { x: 20, y: 60, w: 1390, h: 680 };
+/** linha onde termina a guia (logo abaixo das etiquetas HTML) */
+const M_LEAD_TOP = 205;
+
+/** Indicadores do celular: guia + ponto no SVG; a etiqueta é HTML (fonte legível). */
+const MOBILE_TAGS: { title: string; value: string; anchor: Pt; left: number }[] = [
+  { title: "Britagem", value: "420 t/h", anchor: [612, 468], left: 16 },
+  { title: "Peneiramento", value: "98,2%", anchor: [915, 318], left: 44.5 },
+  { title: "Pilha Brita 1", value: "12.480 t", anchor: [1290, 520], left: 73 },
+];
+
 function MobileScene() {
   const id = "plant-m";
   const shift = -220;
   return (
-    <svg viewBox="20 200 1390 540" preserveAspectRatio="xMidYMax meet" aria-hidden="true" role="presentation">
+    <svg
+      viewBox={`${M_VB.x} ${M_VB.y} ${M_VB.w} ${M_VB.h}`}
+      preserveAspectRatio="xMidYMax meet"
+      aria-hidden="true"
+      role="presentation"
+    >
       <Defs id={id} />
       <Platform id={id} cx={710} scale={0.72} />
 
@@ -303,7 +320,36 @@ function MobileScene() {
       <Conveyor from={[618, 680]} to={[1040 + shift, 336]} legs={[720]} />
       <PrimaryCrusher />
       <TruckOnRamp />
+
+      {/* guias dos indicadores */}
+      {MOBILE_TAGS.map(({ title, anchor: [ax, ay] }) => (
+        <g key={title} className="mtag">
+          <path className="lead" d={`M${ax} ${ay} L${ax} ${M_LEAD_TOP}`} />
+          <circle className="np" cx={ax} cy={ay} r="9" />
+          <circle className="nd" cx={ax} cy={ay} r="8" />
+        </g>
+      ))}
     </svg>
+  );
+}
+
+function MobileTags() {
+  return (
+    <>
+      {MOBILE_TAGS.map((t) => (
+        <div
+          key={t.title}
+          className="absolute top-[2%] w-[26.5%] rounded-md border border-lime/60 bg-black/75 px-2 py-1.5"
+          style={{ left: `${t.left}%` }}
+        >
+          <div className="flex items-center gap-1 font-mono text-[8px] leading-none font-medium tracking-[0.05em] text-[#c9ccc3] uppercase">
+            <span className="h-1 w-1 shrink-0 animate-pulse-glow rounded-full bg-lime shadow-[0_0_6px_#dcff0a]" />
+            <span className="truncate">{t.title}</span>
+          </div>
+          <div className="mt-1 font-mono text-[12px] leading-none font-bold text-white">{t.value}</div>
+        </div>
+      ))}
+    </>
   );
 }
 
@@ -313,8 +359,9 @@ export default function PlantScene() {
       <div className="hidden h-full sm:block">
         <DesktopScene />
       </div>
-      <div className="sm:hidden">
+      <div className="relative sm:hidden">
         <MobileScene />
+        <MobileTags />
       </div>
     </>
   );
