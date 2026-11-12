@@ -1,3 +1,4 @@
+import AiHighlight from "./AiHighlight";
 import DemoForm from "./DemoForm";
 import PlantScene from "./ui/PlantScene";
 
@@ -80,12 +81,9 @@ export default function Hero() {
       </div>
       </div>
 
-      {/* formulário */}
-      <div
-        id="agendar-demonstracao"
-        className="mx-auto grid max-w-6xl scroll-mt-24 gap-10 px-6 pt-6 pb-20 sm:pb-28 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-16"
-      >
-        <div>
+      {/* formulário (esquerda) + novidade IA (direita) */}
+      <div className="mx-auto grid max-w-6xl gap-14 px-6 pt-6 pb-20 sm:pb-28 lg:grid-cols-2 lg:items-start lg:gap-16">
+        <div id="agendar-demonstracao" className="scroll-mt-24">
           <span className="section-label">Demonstração</span>
           <h2 className="mt-3 font-mono text-2xl font-bold tracking-[-0.01em] text-white sm:text-3xl">
             Agende uma demonstração do Minerion.
@@ -94,8 +92,11 @@ export default function Hero() {
             Preencha seus dados e nossa equipe entra em contato para marcar o
             melhor horário.
           </p>
+          <div className="mt-8">
+            <DemoForm />
+          </div>
         </div>
-        <DemoForm />
+        <AiHighlight />
       </div>
     </section>
   );
