@@ -34,6 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           strategy="beforeInteractive"
         />
         {children}
+        <div className="noise-overlay" aria-hidden="true" />
       </body>
     </html>
   );
