@@ -5,10 +5,10 @@ const iconProps = {
   viewBox: "0 0 24 24",
   fill: "none",
   stroke: "currentColor",
-  strokeWidth: 2,
+  strokeWidth: 1.8,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
-  className: "h-7 w-7",
+  className: "h-8 w-8 shrink-0 text-lime",
   "aria-hidden": true,
 };
 
@@ -17,8 +17,7 @@ const BENEFITS: { label: [string, string]; icon: ReactNode }[] = [
     label: ["Linguagem", "natural"],
     icon: (
       <svg {...iconProps}>
-        <rect x="3" y="4" width="18" height="12" rx="2" />
-        <path d="M8 20h8M12 16v4" />
+        <path d="M4 5h16v11H9l-5 4V5z" />
       </svg>
     ),
   },
@@ -42,29 +41,31 @@ const BENEFITS: { label: [string, string]; icon: ReactNode }[] = [
   },
 ];
 
-/** Banner "Novidade Minerion: IA integrada ao ERP". */
+/** Banner "Novidade Minerion: IA integrada ao ERP" — versão escura. */
 export default function AiBanner() {
   return (
     <section
       aria-labelledby="ai-banner-title"
-      className="relative isolate overflow-hidden bg-lime text-black"
+      className="relative isolate flex flex-col overflow-hidden border-y border-white/10 bg-black xl:block"
     >
-      {/* textura de pontos no canto inferior esquerdo */}
+      {/* imagem: no desktop ocupa a direita e some no preto à esquerda */}
       <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 -z-10 h-40 w-72 opacity-25"
-        style={{
-          backgroundImage: "radial-gradient(#000 1px, transparent 1.2px)",
-          backgroundSize: "14px 14px",
-          maskImage: "linear-gradient(to top right, #000, transparent 70%)",
-          WebkitMaskImage: "linear-gradient(to top right, #000, transparent 70%)",
-        }}
-      />
+        className="relative h-72 sm:h-[26rem] xl:absolute xl:inset-y-0 xl:right-0 xl:h-auto xl:left-[max(40%,calc(50%-6rem))] xl:[mask-image:linear-gradient(to_right,transparent_0%,#000_38%)]"
+      >
+        <Image
+          src="/minerion-ia-chat.png"
+          alt="Chat com IA dentro do ERP Minerion criando uma ordem de serviço a partir de uma conversa em linguagem natural"
+          fill
+          sizes="(min-width: 1280px) 68vw, 100vw"
+          className="object-cover object-[35%_center] xl:object-[30%_center]"
+        />
+        {/* no celular a imagem vem embaixo: funde com o texto acima */}
+        <div aria-hidden="true" className="absolute inset-0 bg-linear-to-b from-black via-transparent to-transparent xl:hidden" />
+      </div>
 
-      <div className="mx-auto max-w-7xl">
-        {/* conteúdo */}
-        <div className="relative z-10 px-6 py-16 sm:py-20 xl:w-[44%] xl:max-w-[620px] xl:py-20 xl:pr-0 xl:pl-6">
-          <span className="inline-flex items-center gap-3 rounded-full bg-black px-5 py-2.5 text-sm font-bold tracking-wide text-lime uppercase">
+      <div className="relative z-10 mx-auto w-full max-w-7xl max-xl:order-first">
+        <div className="px-6 py-16 sm:py-20 xl:w-[50%] xl:max-w-[620px] xl:py-24 xl:pl-6">
+          <span className="inline-flex items-center gap-3 rounded-full border border-lime/70 px-5 py-2 text-sm font-bold tracking-wide text-lime uppercase">
             Novidade Minerion
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true">
               <path d="M10 3l1.6 4.9L16.5 9.5l-4.9 1.6L10 16l-1.6-4.9L3.5 9.5l4.9-1.6L10 3z" />
@@ -74,34 +75,29 @@ export default function AiBanner() {
 
           <h2
             id="ai-banner-title"
-            className="mt-7 font-sans text-[2rem] leading-[1.12] tracking-[-0.02em] sm:text-[2.6rem] xl:text-[2.5rem]"
+            className="mt-6 font-sans text-[2rem] leading-[1.12] font-bold tracking-[-0.02em] sm:text-[2.6rem] xl:text-[2.35rem] 2xl:text-[2.6rem]"
           >
-            <span className="block font-bold">O ERP da mineração evoluiu.</span>
-            <span className="block font-normal">
-              Agora com{" "}
-              <span className="rounded-md bg-black/10 px-1.5 font-bold">IA integrada.</span>
-            </span>
+            <span className="block text-white">O ERP da mineração evoluiu.</span>
+            <span className="block text-lime">Agora com IA integrada.</span>
           </h2>
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-black/85">
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/80">
             Consulte informações da sua operação em linguagem natural,
             diretamente no ERP Minerion. Mais agilidade para acessar dados e
             apoiar suas decisões.
           </p>
 
-          <ul className="mt-9 grid max-w-xl grid-cols-3">
+          <ul className="mt-8 grid grid-cols-3 sm:flex sm:items-center">
             {BENEFITS.map((b, i) => (
               <li
                 key={b.label.join(" ")}
                 className={
-                  "flex flex-col gap-3 px-3 first:pl-0 sm:px-6 " +
-                  (i > 0 ? "border-l border-black/15" : "")
+                  "flex flex-col items-start gap-2 pr-3 sm:flex-row sm:items-center sm:gap-3 sm:pr-7 " +
+                  (i > 0 ? "border-l border-white/20 pl-3 sm:pl-7" : "")
                 }
               >
-                <span className="grid h-14 w-14 place-items-center rounded-xl bg-black text-lime">
-                  {b.icon}
-                </span>
-                <span className="text-base leading-tight font-bold sm:text-xl">
+                {b.icon}
+                <span className="text-sm leading-tight font-semibold text-white sm:text-base">
                   {b.label[0]}
                   <br />
                   {b.label[1]}
@@ -112,35 +108,14 @@ export default function AiBanner() {
 
           <a
             href="#agendar-demonstracao"
-            className="group mt-10 inline-flex items-center gap-4 rounded-2xl bg-black px-7 py-5 text-base font-semibold text-white transition-transform duration-300 hover:-translate-y-0.5 sm:px-10 sm:text-lg"
+            className="btn btn-primary mt-10 rounded-xl px-8 py-4 text-base"
           >
-            Conheça a IA integrada ao Minerion
-            <svg
-              viewBox="0 0 24 24"
-              className="h-5 w-5 text-lime transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
+            Conheça a IA integrada
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M7 17L17 7M8 7h9v9" />
             </svg>
           </a>
         </div>
-
-      </div>
-
-      {/* imagem: no celular abaixo do texto; no desktop presa à direita, larga, com corte diagonal */}
-      <div className="relative h-72 [clip-path:polygon(0_14%,100%_0,100%_100%,0_100%)] sm:h-[28rem] lg:h-[34rem] xl:absolute xl:inset-y-0 xl:right-0 xl:h-auto xl:w-[60%] xl:[clip-path:polygon(22%_0,100%_0,100%_100%,5%_100%)]">
-        <Image
-          src="/minerion-ia-chat.png"
-          alt="Chat com IA dentro do ERP Minerion criando uma ordem de serviço a partir de uma conversa em linguagem natural"
-          fill
-          sizes="(min-width: 1280px) 60vw, 100vw"
-          className="object-cover object-[35%_center] xl:object-[30%_center]"
-        />
       </div>
     </section>
   );
