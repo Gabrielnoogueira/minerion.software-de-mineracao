@@ -103,7 +103,12 @@ function Tag({
 
 export default function PlantScene() {
   return (
-    <svg viewBox="0 120 2000 620" aria-hidden="true" role="presentation">
+    <svg
+      viewBox="0 120 2000 620"
+      preserveAspectRatio="xMidYMax meet"
+      aria-hidden="true"
+      role="presentation"
+    >
       <defs>
         <radialGradient id="plant-ga" cx="50%" cy="50%" r="50%">
           <stop offset="0" stopColor="#DCFF0A" stopOpacity=".2" />

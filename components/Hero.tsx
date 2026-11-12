@@ -34,8 +34,10 @@ export default function Hero() {
       />
       <div aria-hidden="true" className="aurora-blob -z-10 -top-40 -left-20 h-[500px] w-[500px] animate-aurora bg-lime/15" />
 
+      {/* primeira dobra: no desktop ocupa a tela toda e a planta se ajusta ao espaço restante */}
+      <div className="flex flex-col lg:h-svh lg:min-h-[620px] lg:max-h-[1100px]">
       {/* título */}
-      <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-24 text-center sm:pt-20">
+      <div className="mx-auto flex max-w-6xl shrink-0 flex-col items-center px-6 pt-24 text-center sm:pt-20">
         <span className="glass-panel inline-flex items-center gap-2 rounded-full px-4 py-2">
           <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-lime shadow-[0_0_10px_#dcff0a]" />
           <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-200">
@@ -43,7 +45,7 @@ export default function Hero() {
           </span>
         </span>
 
-        <h1 className="mt-6 font-mono font-bold leading-[0.95] tracking-[-0.045em] text-balance text-[clamp(2.5rem,8vw,6.5rem)]">
+        <h1 className="mt-6 font-mono font-bold leading-[0.95] tracking-[-0.045em] text-balance text-[clamp(2.5rem,min(8vw,11svh),6.5rem)]">
           <span className="block bg-linear-to-b from-white from-20% to-[#8c9086] bg-clip-text text-transparent">
             Software completo
           </span>
@@ -68,13 +70,14 @@ export default function Hero() {
 
       {/* planta de beneficiamento */}
       <div
-        className="plant relative -mt-2 w-[210%] max-w-none -ml-[55%] sm:mt-0 sm:w-[125%] sm:-ml-[12.5%] lg:mx-auto lg:w-full lg:max-w-[1500px]"
+        className="plant relative -mt-2 w-[210%] max-w-none -ml-[55%] sm:mt-0 sm:w-[125%] sm:-ml-[12.5%] lg:mx-auto lg:mt-2 lg:min-h-0 lg:w-full lg:max-w-[1500px] lg:flex-1"
         style={{
-          maskImage: "linear-gradient(#000 78%, transparent)",
-          WebkitMaskImage: "linear-gradient(#000 78%, transparent)",
+          maskImage: "linear-gradient(#000 85%, transparent)",
+          WebkitMaskImage: "linear-gradient(#000 85%, transparent)",
         }}
       >
         <PlantScene />
+      </div>
       </div>
 
       {/* formulário */}

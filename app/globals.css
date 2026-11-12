@@ -198,6 +198,12 @@ html {
   height: auto;
   overflow: visible;
 }
+@media (min-width: 1024px) {
+  /* no desktop a ilustração preenche a altura que sobra na primeira dobra */
+  .plant svg {
+    height: 100%;
+  }
+}
 .plant .ln {
   fill: #0e100c;
   stroke: var(--color-lime);
