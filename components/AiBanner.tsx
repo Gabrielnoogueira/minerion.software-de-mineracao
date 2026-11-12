@@ -46,25 +46,36 @@ export default function AiBanner() {
   return (
     <section
       aria-labelledby="ai-banner-title"
-      className="relative isolate flex flex-col overflow-hidden border-y border-white/10 bg-black xl:block"
+      className="relative bg-black px-4 pb-20 sm:px-6 sm:pb-28"
     >
-      {/* imagem: no desktop ocupa a direita e some no preto à esquerda */}
-      <div
-        className="relative h-72 sm:h-[26rem] xl:absolute xl:inset-y-0 xl:right-0 xl:h-auto xl:left-[max(40%,calc(50%-6rem))] xl:[mask-image:linear-gradient(to_right,transparent_0%,#000_38%)]"
-      >
-        <Image
-          src="/minerion-ia-chat.png"
-          alt="Chat com IA dentro do ERP Minerion criando uma ordem de serviço a partir de uma conversa em linguagem natural"
-          fill
-          sizes="(min-width: 1280px) 68vw, 100vw"
-          className="object-cover object-[35%_center] xl:object-[30%_center]"
+      {/* painel destacado: diferencia do formulário logo acima */}
+      <div className="relative isolate mx-auto flex max-w-7xl flex-col overflow-hidden rounded-[28px] border border-lime/25 bg-[#0b0d09] shadow-[0_0_90px_-25px_rgba(220,255,10,0.35)] xl:block xl:min-h-[560px]">
+        {/* luz lima no canto e grid técnico */}
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -left-24 -z-10 h-96 w-96 rounded-full bg-lime/15 blur-[110px]" />
+        <div
+          aria-hidden="true"
+          className="bg-grid pointer-events-none absolute inset-0 -z-10 opacity-70"
+          style={{
+            maskImage: "radial-gradient(ellipse at 15% 85%, #000, transparent 60%)",
+            WebkitMaskImage: "radial-gradient(ellipse at 15% 85%, #000, transparent 60%)",
+          }}
         />
-        {/* no celular a imagem vem embaixo: funde com o texto acima */}
-        <div aria-hidden="true" className="absolute inset-0 bg-linear-to-b from-black via-transparent to-transparent xl:hidden" />
-      </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl max-xl:order-first">
-        <div className="px-6 py-16 sm:py-20 xl:w-[50%] xl:max-w-[620px] xl:py-24 xl:pl-6">
+        {/* imagem: no desktop ocupa a direita do painel e some à esquerda */}
+        <div className="relative h-72 sm:h-[26rem] xl:absolute xl:inset-y-0 xl:right-0 xl:left-[40%] xl:h-auto xl:[mask-image:linear-gradient(to_right,transparent_0%,#000_38%)]">
+          <Image
+            src="/minerion-ia-chat.png"
+            alt="Chat com IA dentro do ERP Minerion criando uma ordem de serviço a partir de uma conversa em linguagem natural"
+            fill
+            sizes="(min-width: 1280px) 800px, 100vw"
+            className="object-cover object-[35%_center] xl:object-[30%_center]"
+          />
+          {/* no celular a imagem vem embaixo: funde com o texto acima */}
+          <div aria-hidden="true" className="absolute inset-0 bg-linear-to-b from-[#0b0d09] via-transparent to-transparent xl:hidden" />
+        </div>
+
+        <div className="relative z-10 max-xl:order-first">
+          <div className="px-6 pt-12 pb-10 sm:px-10 sm:pt-14 xl:w-[52%] xl:max-w-[640px] xl:px-14 xl:py-16">
           <span className="inline-flex items-center gap-3 rounded-full border border-lime/70 px-5 py-2 text-sm font-bold tracking-wide text-lime uppercase">
             Novidade Minerion
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true">
@@ -115,6 +126,7 @@ export default function AiBanner() {
               <path d="M7 17L17 7M8 7h9v9" />
             </svg>
           </a>
+        </div>
         </div>
       </div>
     </section>
