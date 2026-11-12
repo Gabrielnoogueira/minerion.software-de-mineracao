@@ -45,7 +45,7 @@ export default function Hero() {
           </span>
         </span>
 
-        <h1 className="mt-6 font-mono font-bold leading-[0.95] tracking-[-0.045em] text-balance text-[clamp(2.5rem,min(8vw,11svh),6.5rem)]">
+        <h1 className="mt-6 font-mono font-bold leading-[0.95] tracking-[-0.045em] text-balance text-[clamp(2.1rem,min(6.4vw,8.8svh),5.25rem)]">
           <span className="block bg-linear-to-b from-white from-20% to-[#8c9086] bg-clip-text text-transparent">
             Software completo
           </span>
@@ -70,7 +70,7 @@ export default function Hero() {
 
       {/* planta de beneficiamento */}
       <div
-        className="plant relative -mt-2 w-[210%] max-w-none -ml-[55%] sm:mt-0 sm:w-[125%] sm:-ml-[12.5%] lg:mx-auto lg:mt-2 lg:min-h-0 lg:w-full lg:max-w-[1500px] lg:flex-1"
+        className="plant relative -mt-2 w-[230%] max-w-none -ml-[65%] sm:mt-0 sm:w-[135%] sm:-ml-[17.5%] lg:mx-auto lg:mt-2 lg:min-h-0 lg:w-full lg:max-w-[1760px] lg:flex-1"
         style={{
           maskImage: "linear-gradient(#000 85%, transparent)",
           WebkitMaskImage: "linear-gradient(#000 85%, transparent)",
