@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import AiBanner from "@/components/AiBanner";
 import BigNumbers from "@/components/BigNumbers";
 import PainPoints from "@/components/PainPoints";
 import Testimonials from "@/components/Testimonials";
@@ -15,6 +16,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <AiBanner />
         <BigNumbers />
         <PainPoints />
         <Testimonials />
