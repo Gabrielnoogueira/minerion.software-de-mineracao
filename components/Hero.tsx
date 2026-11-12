@@ -77,7 +77,7 @@ export default function Hero() {
 
       {/* planta de beneficiamento */}
       <div
-        className="plant relative -mt-2 w-[230%] max-w-none -ml-[65%] sm:mt-0 sm:w-[135%] sm:-ml-[17.5%] lg:mx-auto lg:mt-2 lg:min-h-0 lg:w-full lg:max-w-[1760px] lg:flex-1"
+        className="plant relative mt-6 w-full sm:mt-0 sm:w-[135%] sm:max-w-none sm:-ml-[17.5%] lg:mx-auto lg:mt-2 lg:min-h-0 lg:w-full lg:max-w-[1760px] lg:flex-1"
         style={{
           maskImage: "linear-gradient(#000 85%, transparent)",
           WebkitMaskImage: "linear-gradient(#000 85%, transparent)",
