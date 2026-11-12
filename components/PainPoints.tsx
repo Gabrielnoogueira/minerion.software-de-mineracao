@@ -53,14 +53,16 @@ export default function PainPoints() {
           ]}
           className="mt-10"
         >
-          <SliderContainer className="gap-6">
+          {/* espaçamento via padding no slide (não `gap`): com loop, o embla não
+              conta o gap na emenda e dois cartões ficavam grudados */}
+          <SliderContainer>
             {/* Conteúdo repetido: o motor de loop do embla precisa de trilha
                 bem mais larga que a viewport para girar sem travar. */}
             {Array.from({ length: 4 }).flatMap((_, repeat) =>
               pains.map((pain) => (
                 <Slider
                   key={`${pain.title}-${repeat}`}
-                  className="w-[280px] sm:w-[340px]"
+                  className="w-[304px] pr-6 sm:w-[364px]"
                 >
                   <div className="h-full rounded-xl border border-white/10 bg-black/30 p-6">
                     <h3 className="font-mono text-lg font-semibold text-lime">

@@ -86,7 +86,7 @@ export default function AiBanner() {
 
           <h2
             id="ai-banner-title"
-            className="mt-6 font-sans text-[2rem] leading-[1.12] font-bold tracking-[-0.02em] sm:text-[2.6rem] xl:text-[2.35rem] 2xl:text-[2.6rem]"
+            className="mt-6 font-sans text-[2rem] leading-[1.12] font-bold tracking-[-0.02em] sm:text-[2.6rem] xl:text-[2.35rem]"
           >
             <span className="block text-white">O ERP da mineração evoluiu.</span>
             <span className="block text-lime">Agora com IA integrada.</span>
