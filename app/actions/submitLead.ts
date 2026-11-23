@@ -1,5 +1,7 @@
 "use server";
 
+import { headers } from "next/headers";
+
 /** Objetivos que geram lead. "outro" redireciona para o site e nunca chega aqui. */
 export type LeadObjective = "demonstracao" | "cliente";
 
@@ -30,11 +32,11 @@ function sourceUrl(value: FormDataEntryValue | null): string {
   return url.startsWith(SITE_URL) ? url.slice(0, 2000) : SITE_URL;
 }
 
-async function postLead(body: string): Promise<boolean> {
+async function postLead(body: string, visitorHeaders: Record<string, string>): Promise<boolean> {
   try {
     const res = await fetch(LEAD_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...visitorHeaders },
       body,
       signal: AbortSignal.timeout(8000),
     });
@@ -100,10 +102,25 @@ export async function submitLead(
     job_title: cargo,
     event_id: eventId,
     event_source_url: sourceUrl(formData.get("page_url")),
+    extra: { objetivo },
   });
 
+  // IP e user-agent reais do visitante (da requisição que ELE fez pra essa
+  // Server Action) — sem isso o tracking.minerion registraria o IP/UA do
+  // nosso próprio servidor Vercel, degradando o Advanced Matching do Meta.
+  // A Vercel sempre ANEXA o IP de conexão real ao final de x-forwarded-for
+  // (nunca substitui), e o tracking.minerion lê o PRIMEIRO da lista — por
+  // isso o valor que repassamos aqui continua vencendo do lado de lá.
+  const incomingHeaders = await headers();
+  const visitorIp = incomingHeaders.get("x-forwarded-for") ?? incomingHeaders.get("x-real-ip");
+  const visitorUserAgent = incomingHeaders.get("user-agent");
+  const visitorHeaders: Record<string, string> = {
+    ...(visitorIp ? { "x-forwarded-for": visitorIp } : {}),
+    ...(visitorUserAgent ? { "user-agent": visitorUserAgent } : {}),
+  };
+
   // Sem confirmação do tracking não mostramos sucesso: senão o lead se perde em silêncio.
-  if (!(await postLead(body)) && !(await postLead(body))) {
+  if (!(await postLead(body, visitorHeaders)) && !(await postLead(body, visitorHeaders))) {
     return fail("Não conseguimos enviar agora. Aguarde um instante e tente novamente.");
   }
 
