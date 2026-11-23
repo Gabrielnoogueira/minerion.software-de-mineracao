@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Header() {
   return (
     <header className="absolute inset-x-0 top-0 z-50">
-      <div className="mx-auto flex max-w-6xl items-center px-6 py-4">
+      <div className="mx-auto flex max-w-7xl items-center px-6 py-4 min-[100rem]:max-w-[1520px] min-[100rem]:py-6">
         <Image
           src="/minerion-logo-footer.png"
           alt="Minerion"

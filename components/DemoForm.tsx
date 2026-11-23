@@ -23,7 +23,7 @@ const OBJECTIVES: { value: Objective; label: string }[] = [
 const initialState: SubmitLeadState = { success: false };
 
 const inputClasses =
-  "w-full rounded-lg border border-white/15 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-lime focus:ring-1 focus:ring-lime";
+  "w-full rounded-lg border border-white/15 bg-black/40 px-4 py-3 text-sm text-white min-[100rem]:px-5 min-[100rem]:py-4 min-[100rem]:text-base placeholder:text-white/40 outline-none transition focus:border-lime focus:ring-1 focus:ring-lime";
 
 export default function DemoForm() {
   const [state, formAction, isPending] = useActionState(
@@ -88,12 +88,12 @@ export default function DemoForm() {
       action={formAction}
       onSubmit={handleSubmit}
       onFocus={handleFormFocus}
-      className="relative space-y-5 rounded-2xl border border-lime/40 bg-grey/80 p-6 sm:p-8"
+      className="relative space-y-5 rounded-2xl border border-lime/40 bg-grey/85 p-6 backdrop-blur-md sm:p-8 min-[100rem]:space-y-7 min-[100rem]:p-10"
     >
       <input type="hidden" name="trck_user_id" value={trckUserId} />
 
       {/* em "Outro assunto" os campos deixam de ser obrigatórios (não há envio de lead) */}
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 min-[100rem]:gap-5">
         <input name="nome" type="text" placeholder="Nome" required={!isOther} className={inputClasses} />
         <input name="email" type="email" placeholder="Email" required={!isOther} className={inputClasses} />
         <input name="empresa" type="text" placeholder="Empresa" required={!isOther} className={inputClasses} />
@@ -108,7 +108,7 @@ export default function DemoForm() {
       </div>
 
       <div>
-        <label htmlFor="objetivo" className="text-sm font-medium text-white">
+        <label htmlFor="objetivo" className="text-sm font-medium text-white min-[100rem]:text-base">
           Qual o principal objetivo da sua conversa com a gente?
         </label>
         <div className="relative mt-2">
@@ -171,7 +171,7 @@ export default function DemoForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full rounded-lg bg-lime px-6 py-3 font-mono text-sm font-semibold text-black transition hover:bg-lime/90 disabled:opacity-60"
+        className="w-full rounded-lg bg-lime px-6 py-3.5 font-mono text-sm font-semibold text-black xl:text-base min-[100rem]:py-5 min-[100rem]:text-lg transition hover:bg-lime/90 disabled:opacity-60"
       >
         {isOther
           ? "Continuar no site da Minerion →"
@@ -181,7 +181,7 @@ export default function DemoForm() {
       </button>
 
       {!isOther && (
-        <p className="text-xs text-white/50">
+        <p className="text-xs text-white/60 min-[100rem]:text-sm">
           Ao enviar, você concorda em ser contatado pela Minerion sobre este agendamento.
         </p>
       )}
