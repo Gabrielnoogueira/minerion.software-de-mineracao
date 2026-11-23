@@ -58,7 +58,11 @@ export default function DemoForm() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     if (isOther) {
-      // não envia o lead: só redireciona
+      // não envia o lead: só redireciona. Sem isso não tínhamos nenhuma
+      // visibilidade de quantas pessoas tocam no form (conta como FormStart)
+      // e saem por aqui em vez de completar — útil pra investigar queda de
+      // conversão sem confundir com falha de envio.
+      window.minerionTrack?.("FormOtherRedirect", true);
       event.preventDefault();
       window.location.href = OTHER_SUBJECT_URL;
     }
