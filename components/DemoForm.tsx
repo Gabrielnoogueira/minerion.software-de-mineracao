@@ -6,6 +6,9 @@ import { submitLead, type SubmitLeadState } from "@/app/actions/submitLead";
 declare global {
   interface Window {
     minerionTrack?: (eventName: string, toMeta?: boolean) => void;
+    fbq?: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
+    __googleAdsConversions?: { sendTo: string }[];
   }
 }
 
@@ -20,6 +23,19 @@ const OBJECTIVES: { value: Objective; label: string }[] = [
   { value: "outro", label: "Outro assunto (carreira, parcerias, fornecedores)" },
 ];
 
+/**
+ * Conversões do navegador, as mesmas que window.minerionTrackLead dispara
+ * (Pixel Lead, GA4 generate_lead e Google Ads). O POST em /api/lead NÃO é
+ * repetido aqui: ele já saiu pela Server Action com este mesmo eventId.
+ */
+function trackLeadConversions(eventId: string) {
+  window.fbq?.("track", "Lead", { content_name: "lead_form" }, { eventID: eventId });
+  window.gtag?.("event", "generate_lead");
+  for (const c of window.__googleAdsConversions ?? []) {
+    window.gtag?.("event", "conversion", { send_to: c.sendTo, transaction_id: eventId });
+  }
+}
+
 const initialState: SubmitLeadState = { success: false };
 
 const inputClasses =
@@ -31,24 +47,27 @@ export default function DemoForm() {
     initialState
   );
   const [objective, setObjective] = useState<Objective | null>(null);
-  const [trckUserId, setTrckUserId] = useState("");
   const formStartFired = useRef(false);
+  const trackedEventId = useRef<string | null>(null);
   const isOther = objective === "outro";
 
-  // trck_user_id vem do localStorage (gravado pelo script /api/tracker) e
-  // segue no form pro servidor — o envio do lead em si agora acontece na
-  // Server Action (lado servidor, sem corrida de timing). Isso aqui só serve
-  // pra casar o lead com o visitante já identificado pelo tracking.
   useEffect(() => {
+    if (!state.success || !state.eventId || trackedEventId.current === state.eventId) return;
+    trackedEventId.current = state.eventId;
+    trackLeadConversions(state.eventId);
+  }, [state.success, state.eventId]);
+
+  // Lido na hora do envio (e não ao abrir a página): se o /api/tracker carregar
+  // atrasado, o lead ainda casa com a visita e a campanha.
+  function submitWithTracking(formData: FormData) {
     try {
-      // localStorage só existe no client; lazy initializer no useState quebraria
-      // a hidratação (servidor sempre renderiza "" antes do mount).
-      setTrckUserId(localStorage.getItem("trck_user_id") ?? ""); // eslint-disable-line react-hooks/set-state-in-effect
+      formData.set("trck_user_id", localStorage.getItem("trck_user_id") ?? "");
     } catch {
-      // localStorage indisponível (modo privado etc.) — segue sem, o /api/lead
-      // ainda funciona (só perde o match com a sessão de navegação anterior).
+      // localStorage indisponível (modo privado etc.): segue sem o id
     }
-  }, []);
+    formData.set("page_url", window.location.href);
+    formAction(formData);
+  }
 
   function handleFormFocus() {
     if (formStartFired.current) return;
@@ -85,21 +104,20 @@ export default function DemoForm() {
 
   return (
     <form
-      action={formAction}
+      action={submitWithTracking}
       onSubmit={handleSubmit}
       onFocus={handleFormFocus}
       className="relative space-y-5 rounded-2xl border border-lime/40 bg-grey/85 p-6 backdrop-blur-md sm:p-8 min-[100rem]:space-y-7 min-[100rem]:p-10"
     >
-      <input type="hidden" name="trck_user_id" value={trckUserId} />
-
       {/* em "Outro assunto" os campos deixam de ser obrigatórios (não há envio de lead) */}
       <div className="grid gap-4 sm:grid-cols-2 min-[100rem]:gap-5">
-        <input name="nome" type="text" placeholder="Nome" required={!isOther} className={inputClasses} />
-        <input name="email" type="email" placeholder="Email" required={!isOther} className={inputClasses} />
-        <input name="empresa" type="text" placeholder="Empresa" required={!isOther} className={inputClasses} />
-        <input name="cargo" type="text" placeholder="Cargo" required={!isOther} className={inputClasses} />
+        <input name="nome" defaultValue={state.values?.nome} type="text" placeholder="Nome" required={!isOther} className={inputClasses} />
+        <input name="email" defaultValue={state.values?.email} type="email" placeholder="Email" required={!isOther} className={inputClasses} />
+        <input name="empresa" defaultValue={state.values?.empresa} type="text" placeholder="Empresa" required={!isOther} className={inputClasses} />
+        <input name="cargo" defaultValue={state.values?.cargo} type="text" placeholder="Cargo" required={!isOther} className={inputClasses} />
         <input
           name="celular"
+          defaultValue={state.values?.celular}
           type="tel"
           placeholder="Celular"
           required={!isOther}
@@ -113,6 +131,7 @@ export default function DemoForm() {
         </label>
         <div className="relative mt-2">
           <select
+            key={state.attempt ?? "first"}
             id="objetivo"
             name="objetivo"
             required
@@ -158,7 +177,7 @@ export default function DemoForm() {
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label>
           Não preencha este campo
-          <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+          <input type="text" name="hp_confirmacao" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
 
