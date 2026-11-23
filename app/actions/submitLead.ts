@@ -108,14 +108,21 @@ export async function submitLead(
   // IP e user-agent reais do visitante (da requisição que ELE fez pra essa
   // Server Action) — sem isso o tracking.minerion registraria o IP/UA do
   // nosso próprio servidor Vercel, degradando o Advanced Matching do Meta.
-  // A Vercel sempre ANEXA o IP de conexão real ao final de x-forwarded-for
-  // (nunca substitui), e o tracking.minerion lê o PRIMEIRO da lista — por
-  // isso o valor que repassamos aqui continua vencendo do lado de lá.
+  // User-agent passa normal (Vercel não sobrescreve), mas o IP não pode ir
+  // em x-forwarded-for: testado em produção, a Vercel SEMPRE sobrescreve
+  // esse header pelo IP real da conexão TCP (o do nosso servidor, nessa
+  // chamada) — por isso vai num header próprio, com secret compartilhado
+  // pra o lado de lá confiar que é a gente mandando, não o próprio visitante
+  // tentando forjar IP.
   const incomingHeaders = await headers();
-  const visitorIp = incomingHeaders.get("x-forwarded-for") ?? incomingHeaders.get("x-real-ip");
+  const visitorIp =
+    incomingHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    incomingHeaders.get("x-real-ip");
   const visitorUserAgent = incomingHeaders.get("user-agent");
   const visitorHeaders: Record<string, string> = {
-    ...(visitorIp ? { "x-forwarded-for": visitorIp } : {}),
+    ...(visitorIp
+      ? { "x-visitor-ip": visitorIp, "x-lead-forward-secret": process.env.LEAD_FORWARD_SECRET ?? "" }
+      : {}),
     ...(visitorUserAgent ? { "user-agent": visitorUserAgent } : {}),
   };
 
