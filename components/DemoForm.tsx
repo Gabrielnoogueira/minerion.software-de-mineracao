@@ -6,13 +6,6 @@ import { submitLead, type SubmitLeadState } from "@/app/actions/submitLead";
 declare global {
   interface Window {
     minerionTrack?: (eventName: string, toMeta?: boolean) => void;
-    minerionTrackLead?: (data: {
-      name?: string;
-      email?: string;
-      phone?: string;
-      company?: string;
-      job_title?: string;
-    }) => void;
   }
 }
 
@@ -38,20 +31,24 @@ export default function DemoForm() {
     initialState
   );
   const [objective, setObjective] = useState<Objective | null>(null);
+  const [trckUserId, setTrckUserId] = useState("");
   const formStartFired = useRef(false);
   const isOther = objective === "outro";
 
+  // trck_user_id vem do localStorage (gravado pelo script /api/tracker) e
+  // segue no form pro servidor — o envio do lead em si agora acontece na
+  // Server Action (lado servidor, sem corrida de timing). Isso aqui só serve
+  // pra casar o lead com o visitante já identificado pelo tracking.
   useEffect(() => {
-    if (state.success) {
-      window.minerionTrackLead?.({
-        name: state.name,
-        email: state.email,
-        phone: state.phone,
-        company: state.company,
-        job_title: state.jobTitle,
-      });
+    try {
+      // localStorage só existe no client; lazy initializer no useState quebraria
+      // a hidratação (servidor sempre renderiza "" antes do mount).
+      setTrckUserId(localStorage.getItem("trck_user_id") ?? ""); // eslint-disable-line react-hooks/set-state-in-effect
+    } catch {
+      // localStorage indisponível (modo privado etc.) — segue sem, o /api/lead
+      // ainda funciona (só perde o match com a sessão de navegação anterior).
     }
-  }, [state.success, state.name, state.email, state.phone, state.company, state.jobTitle]);
+  }, []);
 
   function handleFormFocus() {
     if (formStartFired.current) return;
@@ -89,6 +86,8 @@ export default function DemoForm() {
       onFocus={handleFormFocus}
       className="relative space-y-5 rounded-2xl border border-lime/40 bg-grey/80 p-6 sm:p-8"
     >
+      <input type="hidden" name="trck_user_id" value={trckUserId} />
+
       {/* em "Outro assunto" os campos deixam de ser obrigatórios (não há envio de lead) */}
       <div className="grid gap-4 sm:grid-cols-2">
         <input name="nome" type="text" placeholder="Nome" required={!isOther} className={inputClasses} />

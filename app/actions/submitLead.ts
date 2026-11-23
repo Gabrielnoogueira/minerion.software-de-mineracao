@@ -44,8 +44,38 @@ export async function submitLead(
     return { success: false, error: "Informe um e-mail válido." };
   }
 
-  // Integração com a tabela `leads` no Supabase entra aqui quando o projeto Supabase for criado
-  // (gravar também o `objetivo`).
+  // Envio pro sistema de tracking (tracking.minerion.com.br) — server-to-server,
+  // de propósito: a versão anterior dependia de window.minerionTrackLead no
+  // navegador do visitante, que falha em silêncio (optional chaining) se o
+  // script /api/tracker ainda não tiver carregado no momento do envio. Feito
+  // aqui dentro da Server Action, não depende de timing nenhum no cliente —
+  // esse é hoje o ÚNICO canal real de captura dessa LP, não existe CRM
+  // próprio integrado ainda.
+  const trckUserId = String(formData.get("trck_user_id") ?? "").trim();
+  try {
+    const res = await fetch("https://tracking.minerion.com.br/api/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        trck_user_id: trckUserId || undefined,
+        name: nome,
+        email,
+        phone: celular,
+        company: empresa,
+        job_title: cargo,
+        event_id: crypto.randomUUID(),
+        event_source_url: "https://lpmarketing.minerion.com.br/",
+      }),
+    });
+    if (!res.ok) {
+      console.error("submitLead: /api/lead respondeu", res.status, await res.text().catch(() => ""));
+    }
+  } catch (err) {
+    // Não bloqueia o "sucesso" pro visitante por uma falha de rede pontual,
+    // mas precisa aparecer bem alto nos logs — sem isso o lead se perde de
+    // novo, do mesmo jeito que já aconteceu.
+    console.error("submitLead: falha ao enviar lead pro tracking.minerion", err);
+  }
 
   return {
     success: true,
